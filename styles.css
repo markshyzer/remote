@@ -10,13 +10,29 @@ body {
 #remote {
     background-color: #333333;
     max-width: 320px;
+    min-height: 100vh;
     box-sizing: content-box; 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     color: white;
-    justify-content: center;
+    /* justify-content: center; */
 }
+
+p {
+    padding: 0 30px;
+    text-transform: none;
+}
+
+.input-text {
+    margin: 0 20vw 10px 20vw;
+    background-color: grey;
+    width: 60vw;
+    height: 30px;
+}
+
+
+
 
 .section {
     max-width: inherit;
@@ -31,8 +47,6 @@ body {
     padding: 5px 0 5px 10px;
     margin: 5px 0;
     border-top: 1px solid grey;
-    display: none;
-
 }
 
 .empty {

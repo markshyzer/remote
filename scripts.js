@@ -1,24 +1,64 @@
 let remote = document.getElementById('remote')
 let sections = document.getElementsByClassName('section')
-let code = 'AAAAAQAAAAEAAAAlAw=='
+let labels = document.querySelectorAll('.label')
+let ip_input = document.getElementById('ip-input')
+let key_input = document.getElementById('key-input')
 let full = true
-let compact_sections = {'input-power': false, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-discover-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
+const compact_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-discover-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
+console.log(labels)
+init()
 
+function init() {
+    if (!localStorage.getItem('sections')) {
+        console.log('New User')
+        localStorage.setItem('sections', compact_sections)
+        localStorage.setItem('IP','135.23.185.3');
+    } else {
+        console.log('I see you have been here before')
+    }
+}
 
+ip_input.addEventListener('change', function(e){
+    localStorage.setItem('IP', e.target.value)
+    console.log('set IP in local storage to ', localStorage.getItem('IP'))
+})
 
 remote.addEventListener('click', function(e) {
     console.log("Clickety!", e.target.id)
     command = e.target.id
     if (command in code_list) {
         sendCommand(command)
-    } else if (command = 'full-compact') {
+    } else if (command == 'full-compact') {
         toggle_full()
+    } else if (command == 'settings') {
+        toggle_settings()
     }
 
 })
 
+function toggle_settings() {
+    if (full == false) {
+        toggle_full()
+    }
+    settings_menu = document.getElementById('settings_menu')
+    if (settings_menu.classList.contains('hidden')) {
+        settings_menu.classList.remove('hidden')
+        console.log(labels)
+
+        labels.forEach(l => l.classList.remove('hidden'));
+    } else {
+        settings_menu.classList.add('hidden')
+        labels.forEach(l => l.classList.add('hidden'))
+    }
+
+
+}
+
 function toggle_full() {
+    if (!document.getElementById('settings_menu').classList.contains('hidden')) {
+        toggle_settings()
+    }
     if (full == true) {
         console.log('switch to compact mode')
         for (const [key, value] of Object.entries(compact_sections)) {
@@ -40,12 +80,13 @@ function toggle_full() {
 
 }
 
-localStorage.setItem('IP','135.23.185.3');
+
 console.log(localStorage.getItem('IP'))
 
 function sendCommand(command) {
     const req = new XMLHttpRequest()
-    const tv_url = 'http://135.23.185.3/sony/IRCC'
+    tv_ip = localStorage.getItem('IP')
+    const tv_url = `http://${tv_ip}/sony/IRCC`
     const preshared_key = '1qqa'
     code = code_list[command]
     req.open('POST', tv_url, true);
@@ -67,7 +108,7 @@ function sendCommand(command) {
 
     req.timeout = 3000; // in milliseconds
     req.send(data);
-    console.log(`Sent ${command} command to TV`);
+    console.log(`Sent ${command} command to TV at ${tv_ip} using preshared key ${preshared_key}`);
 
 
 }
