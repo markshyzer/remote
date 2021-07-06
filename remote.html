@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sony TV Remote</title>
+    <link rel="stylesheet" href="styles.css?v=1.0">
+    
+</head>
+<body>
+
+    <div id='remote'>
+        <div class='section' id='menu'>
+            <div class='empty emoji' id='settings'> &#9881;</div>
+            <div class='empty' id=''></div>
+            <div class='empty emoji' id='full-compact'> &#8286;&#8285;&#8286;</div>
+            
+        </div>
+        <div class='page'>
+            <p>IP:</p><input type="text">
+            <p>Pre-shared key:</p><input type="text">
+        </div>
+        <div class='section' id='input-power'>
+            <div class='label'>  <input type="checkbox" class='checkbox' id="input-power-check" checked> Input / Power</div>
+            <div class='button' id='Input'>Input</div>
+            <div class='empty' id=''> </div>
+            <div class='button' id='PowerOff'>Off</div>
+        </div>
+        <div class='section' id='media-controls'>
+            <div class='label'> <input type="checkbox" id="media-controls-check" checked> Media Controls</div>
+            <div class='button small' id='Prev'>I&#9668;&#9668;</div>
+            <div class='button small' id='Pause'>II</div>
+            <div class='button small' id='Stop'>&#9632;</div>
+            <div class='button small' id='Next'>&#9654;&#9654;I</div>
+            <div class='button small' id='Rewind'>&#9668;&#9668;</div>
+            <div class='button small' id='Rec'>&#9679;</div>
+            <div class='button small' id='Play'>&#9654;</div>
+            <div class='button small' id='Forward'>&#9654;&#9654;</div>
+        </div>
+        <div class='section' id='color-buttons'>
+            <div class='label'> <input type="checkbox" id="color-buttons-check" checked>Color Buttons</div>
+            <div class='button small' id='Yellow'></div>
+            <div class='button small' id='Blue'></div>
+            <div class='button small' id='Red'></div>
+            <div class='button small' id='Green'></div>
+        </div>
+        <div class='section' id='nav-wheel'>
+            <div class='label'> <input type="checkbox" id="navigation-wheel-check" checked> Navigation Wheel</div>
+            <div class='empty' id=''></div>
+            <div class='button' id='Up'>&#8593;</div>
+            <div class='button' id='Netflix'>Netflix</div>
+            <div class='button' id='Left'>&#8592;</div>
+            <div class='button' id='Confirm'>&#9737;</div>
+            <div class='button' id='Right'>&#8594;</div>
+            <div class='button' id='Return'>Return</div>
+            <div class='button' id='Down'>&#8595;</div>
+            <div class='empty' id=''></div>
+        </div>
+        <div class='section' id='home-discover-options'>
+            <div class='label'><input type="checkbox" id="home-options-check" checked>Home / Options</div>
+            <div class='button blue' id='Home'>Home</div>
+            <div class='button' id='Options'>Options</div>
+            <div class='button blue' id='Discover' style='font-size: small'>Discover</div>
+        </div>
+        <div class='section' id='info'>
+            <div class='label'><input type="checkbox" id="info-check" checked>Info</div>
+            <div class='button small' id='KeyPad'>KeyPad</div>
+            <div class='button small' id='Display'>Display</div>
+            <div class='button small' id='GGuide'>Guide</div>
+            <div class='button small' id='iManual'>iManual</div>
+        </div>
+        <div class='section' id='numpad'>
+            <div class='label'><input type="checkbox" id="numpad-check" checked>Number Pad</div>
+            <div class='button' id='Num1'>1</div>
+            <div class='button' id='Num2'>2</div>
+            <div class='button' id='Num3'>3</div>
+            <div class='button' id='Num4'>4</div>
+            <div class='button' id='Num5'>5</div>
+            <div class='button' id='Num6'>6</div>
+            <div class='button' id='Num7'>7</div>
+            <div class='button' id='Num8'>8</div>
+            <div class='button' id='Num9'>9</div>
+            <div class='button' id='Dot'>.</div>
+            <div class='button' id='Num0'>0</div>
+            <div class='button' id='ClosedCaption'>CC</div>
+        </div>
+        <div class='section' id='volume-channel'>
+            <div class='label'><input type="checkbox" id="volume-channel-check" checked>Volume / Channel</div>
+            <div class='empty paddleUp' id=''>Vol</div>
+            <div class='empty paddleUp' id=''> Ch</div>
+            <div class='button paddleUp' id='VolumeUp'>+</div>
+            <div class='button paddleUp' id='ChannelUp'>+</div>
+            <div class='button paddleDown' id='VolumeDown'>-</div>
+            <div class='button paddleDown' id='ChannelDown'>-</div>
+            <div class='button' id='Mute'>Mute</div>
+            <div class='button'id='Jump'>Jump</div>
+        </div>
+
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
