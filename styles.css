@@ -121,3 +121,7 @@ body {
     background-color: steelblue;
     /* color: black; */
 }
+
+.hidden {
+    display: none;
+}

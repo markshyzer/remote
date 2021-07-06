@@ -1,5 +1,8 @@
 let remote = document.getElementById('remote')
+let sections = document.getElementsByClassName('section')
 let code = 'AAAAAQAAAAEAAAAlAw=='
+let full = true
+let compact_sections = {'input-power': false, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-discover-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
 
 
@@ -9,9 +12,33 @@ remote.addEventListener('click', function(e) {
     command = e.target.id
     if (command in code_list) {
         sendCommand(command)
+    } else if (command = 'full-compact') {
+        toggle_full()
     }
 
 })
+
+function toggle_full() {
+    if (full == true) {
+        console.log('switch to compact mode')
+        for (const [key, value] of Object.entries(compact_sections)) {
+            if (value == false) {
+                document.getElementById(key).classList.add('hidden')
+                console.log('hid ', key)
+            } else {
+                document.getElementById(key).classList.remove('hidden')
+            }
+          }
+        full = false
+    } else {
+        console.log('switch to full mode')
+        for (const [key, value] of Object.entries(compact_sections)) {
+            document.getElementById(key).classList.remove('hidden')
+        }
+        full = true
+        }
+
+}
 
 localStorage.setItem('IP','135.23.185.3');
 console.log(localStorage.getItem('IP'))
