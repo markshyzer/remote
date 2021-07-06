@@ -22,24 +22,6 @@ function sendCommand(command) {
     const preshared_key = '1qqa'
     code = code_list[command]
     req.open('POST', tv_url, true);
-
-    // req.onreadystatechange = function() {
-    //   if (req.readyState == 4) { // XMLHttpRequest.DONE
-    //     if (req.status != 200) {
-    //       // Safety: JSON.parse does not evaluate the attacker's scripts.
-    //       // const cleanedResponse = JSON.parse(req.responseText);
-    //       const message = 'Failed ' + command + ' ' + code + ' (Status '
-    //         + req.status + '): ' + tv_url + ' Key: ' + SONY_TV_PRESHARED_KEY
-    //         + ' (Response: "' + req.responseText + '")';
-    //       console.error(message);
-    //       reject(new Error(message));
-    //     } else {
-    //       // console.log('POST response received for: ' + command + ' ' + code);
-    //       resolve();
-    //     }
-    //   }
-    // }
-
     req.setRequestHeader('Content-Type', 'text/xml; charset=UTF-8');
     // Note: The SOAPAction header value must be enclosed in " otherwise get
     // an Invalid Action error from TV!
@@ -55,19 +37,11 @@ function sendCommand(command) {
         </s:Body>
       </s:Envelope>`;
 
-    /* Other errors to watch for:
-       Incorrect IRCC code results in: 
-     HTTP/1.1 500 Internal Server Error
-     <errorCode>800</errorCode>
-     <errorDescription>Cannot accept the IRCC Code</errorDescription>
-     */
 
     req.timeout = 3000; // in milliseconds
     req.send(data);
     console.log(`Sent ${command} command to TV`);
-    // Note: do not escape(data), that results in UPnPError:
-    //      <errorCode>401</errorCode>
-    //      <errorDescription>Invalid Action</errorDescription>
+
 
 }
 
