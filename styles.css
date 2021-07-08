@@ -107,6 +107,12 @@ p {
     text-align: center;
 }
 
+#status {
+    text-align: center;  
+    height: 40px;
+    color: #DDDDDD;
+}
+
 #PowerOff {
     background-color: green;
 }

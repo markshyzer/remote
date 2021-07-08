@@ -13,11 +13,11 @@
     <div id='remote'>
         <div class='section' id='menu'>
             <div class='empty emoji' id='settings'> &#9881;</div>
-            <div class='empty' id=''></div>
+            <div class='empty' id='status'></div>
             <div class='empty emoji' id='full-compact'> &#8286;&#8285;&#8286;</div>
             
         </div>
-        <div class='page' id='settings_menu'>
+        <div class='page hidden' id='settings_menu'>
             <p>Setup</p>
             <p>To connect to your TV, enter the device IP and pre-shared key. Find your TV's IP address by pressing [HOME] 
                 and navigating to Settings -> Network -> Advanced settings -> Network status -> IP address</p>
@@ -25,8 +25,8 @@
             <p>Find or set your TV's pre-shared key by going to [HOME] -> Settings -> Network -> Home network setup -> IP control -> Authentication / Pre-Shared Key</p>
             <p>Pre-shared key:</p><input class='input-text' id='key-input' type="text">
             <p>This information will be stored in your browser for future use.</p>
-            <p>Press &#9881; to close or return to this menu.</p>
-            <p>Press &#8286;&#8285;&#8286; to switch between Full remote and Compact view</p>
+            <p>Press <span class='emoji' style='font-size: inherit'>&#9881;</span> to close or return to this menu.</p>
+            <p>Press <span class='emoji' style='font-size: inherit'>&#8286;&#8285;&#8286;</span> to switch between Full remote and Compact view</p>
             <p>Use the checkboxes below to customize which sections appear in Compact view</p>
         </div>
         <div class='section' id='input-power'>
@@ -69,7 +69,7 @@
             <div class='label hidden'><input type="checkbox" id="home-options-check" checked>Home / Options</div>
             <div class='button blue' id='Home'>Home</div>
             <div class='button' id='Options'>Options</div>
-            <div class='button blue' id='Discover' style='font-size: small'>Discover</div>
+            <div class='button' id='PicOff'>Pic Off</div>
         </div>
         <div class='section' id='info'>
             <div class='label hidden'><input type="checkbox" id="info-check" checked>Info</div>

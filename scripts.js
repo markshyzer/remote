@@ -1,4 +1,5 @@
 let remote = document.getElementById('remote')
+let status = document.getElementById('status')
 let sections = document.getElementsByClassName('section')
 let labels = document.querySelectorAll('.label')
 let ip_input = document.getElementById('ip-input')
@@ -6,22 +7,33 @@ let key_input = document.getElementById('key-input')
 let full = true
 const compact_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-discover-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
-console.log(labels)
 init()
+display_status('&#8592 Enter TV info', 30)
 
 function init() {
     if (!localStorage.getItem('sections')) {
         console.log('New User')
+        display_status('&#8592 Enter TV info', 30)
         localStorage.setItem('sections', compact_sections)
         localStorage.setItem('IP','135.23.185.3');
+        localStorage.setItem('key', '')
     } else {
         console.log('I see you have been here before')
     }
 }
 
+// TODO: Make sure values are being taken from local storage
+
 ip_input.addEventListener('change', function(e){
     localStorage.setItem('IP', e.target.value)
+    display_status('IP updated')
     console.log('set IP in local storage to ', localStorage.getItem('IP'))
+})
+
+key_input.addEventListener('change', function(e){
+    localStorage.setItem('key', e.target.value)
+    display_status('Key updated')
+    console.log('set key', localStorage.getItem('key'))
 })
 
 remote.addEventListener('click', function(e) {
@@ -37,6 +49,11 @@ remote.addEventListener('click', function(e) {
 
 })
 
+function display_status(message, seconds=3) {
+    status.innerHTML = message
+    setTimeout(() => {status.innerHTML = ''; }, seconds*1000)
+}
+
 function toggle_settings() {
     if (full == false) {
         toggle_full()
@@ -44,9 +61,9 @@ function toggle_settings() {
     settings_menu = document.getElementById('settings_menu')
     if (settings_menu.classList.contains('hidden')) {
         settings_menu.classList.remove('hidden')
-        console.log(labels)
-
         labels.forEach(l => l.classList.remove('hidden'));
+        ip_input.value = localStorage.getItem('IP')
+        key_input.value = localStorage.getItem('key')
     } else {
         settings_menu.classList.add('hidden')
         labels.forEach(l => l.classList.add('hidden'))
@@ -60,7 +77,7 @@ function toggle_full() {
         toggle_settings()
     }
     if (full == true) {
-        console.log('switch to compact mode')
+        display_status('Compact View')
         for (const [key, value] of Object.entries(compact_sections)) {
             if (value == false) {
                 document.getElementById(key).classList.add('hidden')
@@ -71,7 +88,7 @@ function toggle_full() {
           }
         full = false
     } else {
-        console.log('switch to full mode')
+        display_status('Full View')
         for (const [key, value] of Object.entries(compact_sections)) {
             document.getElementById(key).classList.remove('hidden')
         }
@@ -87,7 +104,7 @@ function sendCommand(command) {
     const req = new XMLHttpRequest()
     tv_ip = localStorage.getItem('IP')
     const tv_url = `http://${tv_ip}/sony/IRCC`
-    const preshared_key = '1qqa'
+    const preshared_key = localStorage.getItem('key')
     code = code_list[command]
     req.open('POST', tv_url, true);
     req.setRequestHeader('Content-Type', 'text/xml; charset=UTF-8');
@@ -108,6 +125,7 @@ function sendCommand(command) {
 
     req.timeout = 3000; // in milliseconds
     req.send(data);
+    display_status(command)
     console.log(`Sent ${command} command to TV at ${tv_ip} using preshared key ${preshared_key}`);
 
 
