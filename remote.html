@@ -19,24 +19,24 @@
         </div>
         <div class='page hidden' id='settings_menu'>
             <p>Setup</p>
-            <p>To connect to your TV, enter the device IP and pre-shared key. Find your TV's IP address by pressing [HOME] 
-                and navigating to Settings -> Network -> Advanced settings -> Network status -> IP address</p>
+            <p>Connect to your Sony TV using the device IP and pre-shared key. To find your TV's IP address press [HOME] 
+                and go to Settings -> Network -> Advanced settings -> Network status -> IP address</p>
             <p>IP address:</p><input class='input-text' id='ip-input' type="text">
             <p>Find or set your TV's pre-shared key by going to [HOME] -> Settings -> Network -> Home network setup -> IP control -> Authentication / Pre-Shared Key</p>
             <p>Pre-shared key:</p><input class='input-text' id='key-input' type="text">
             <p>This information will be stored in your browser for future use.</p>
             <p>Press <span class='emoji' style='font-size: inherit'>&#9881;</span> to close or return to this menu.</p>
-            <p>Press <span class='emoji' style='font-size: inherit'>&#8286;&#8285;&#8286;</span> to switch between Full remote and Compact view</p>
+            <p>Press <span class='emoji' style='font-size: inherit'>&#8286;&#8285;&#8286;</span> to switch between Full and Compact views</p>
             <p>Use the checkboxes below to customize which sections appear in Compact view</p>
         </div>
         <div class='section' id='input-power'>
-            <div class='label hidden'>  <input type="checkbox" class='checkbox' id="input-power-check" checked> Input / Power</div>
+            <div class='label hidden'>  <input type="checkbox" class='checkbox' id="input-power-check" checked='gorp'> Input / Power</div>
             <div class='button' id='Input'>Input</div>
             <div class='empty' id=''> </div>
             <div class='button' id='PowerOff'>Off</div>
         </div>
         <div class='section' id='media-controls'>
-            <div class='label hidden'> <input type="checkbox" id="media-controls-check" checked> Media Controls</div>
+            <div class='label hidden'> <input type="checkbox" id="media-controls-check"> Media Controls</div>
             <div class='button small' id='Prev'>I&#9668;&#9668;</div>
             <div class='button small' id='Pause'>II</div>
             <div class='button small' id='Stop'>&#9632;</div>
@@ -54,7 +54,7 @@
             <div class='button small' id='Green'></div>
         </div>
         <div class='section' id='nav-wheel'>
-            <div class='label hidden'> <input type="checkbox" id="navigation-wheel-check" checked> Navigation Wheel</div>
+            <div class='label hidden'> <input type="checkbox" id="nav-wheel-check" checked> Navigation Wheel</div>
             <div class='empty' id=''></div>
             <div class='button' id='Up'>&#8593;</div>
             <div class='button' id='Netflix'>Netflix</div>
@@ -65,7 +65,7 @@
             <div class='button' id='Down'>&#8595;</div>
             <div class='empty' id=''></div>
         </div>
-        <div class='section' id='home-discover-options'>
+        <div class='section' id='home-options'>
             <div class='label hidden'><input type="checkbox" id="home-options-check" checked>Home / Options</div>
             <div class='button blue' id='Home'>Home</div>
             <div class='button' id='Options'>Options</div>

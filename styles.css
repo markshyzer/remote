@@ -25,14 +25,11 @@ p {
 }
 
 .input-text {
-    margin: 0 20vw 10px 20vw;
+    margin: 0 10% 10px 10%;
     background-color: grey;
-    width: 60vw;
+    width: 80%;
     height: 30px;
 }
-
-
-
 
 .section {
     max-width: inherit;
@@ -111,6 +108,13 @@ p {
     text-align: center;  
     height: 40px;
     color: #DDDDDD;
+    overflow: visible;
+}
+
+#menu{
+    position: sticky;
+    top: 0;
+    background-color: inherit;
 }
 
 #PowerOff {

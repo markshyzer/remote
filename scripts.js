@@ -5,16 +5,17 @@ let labels = document.querySelectorAll('.label')
 let ip_input = document.getElementById('ip-input')
 let key_input = document.getElementById('key-input')
 let full = true
-const compact_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-discover-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
+let default_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
 init()
-display_status('&#8592 Enter TV info', 30)
+localStorage.setItem('sections', JSON.stringify(default_sections))
+
+console.log(localStorage.getItem('sections'))
 
 function init() {
     if (!localStorage.getItem('sections')) {
-        console.log('New User')
         display_status('&#8592 Enter TV info', 30)
-        localStorage.setItem('sections', compact_sections)
+        localStorage.setItem('sections', JSON.stringify(default_sections))
         localStorage.setItem('IP','135.23.185.3');
         localStorage.setItem('key', '')
     } else {
@@ -39,12 +40,22 @@ key_input.addEventListener('change', function(e){
 remote.addEventListener('click', function(e) {
     console.log("Clickety!", e.target.id)
     command = e.target.id
+    console.log('command is ', command)
     if (command in code_list) {
         sendCommand(command)
     } else if (command == 'full-compact') {
         toggle_full()
     } else if (command == 'settings') {
         toggle_settings()
+    } else if (e.target.type == 'checkbox') {
+        console.log('checkity', e.target.id.slice(0, -6))
+        default_sections[e.target.id.slice(0, -6)] = !default_sections[e.target.id.slice(0, -6)]
+        localStorage.setItem('sections', JSON.stringify(default_sections))
+        console.log(default_sections)
+        console.log(localStorage.getItem('sections'))
+        
+
+
     }
 
 })
@@ -64,15 +75,18 @@ function toggle_settings() {
         labels.forEach(l => l.classList.remove('hidden'));
         ip_input.value = localStorage.getItem('IP')
         key_input.value = localStorage.getItem('key')
+        let sections = JSON.parse(localStorage.getItem('sections'))
+        for (const [key, value] of Object.entries(sections)) {
+            document.getElementById(key + '-check').checked = value
+        }
     } else {
         settings_menu.classList.add('hidden')
         labels.forEach(l => l.classList.add('hidden'))
     }
-
-
 }
 
 function toggle_full() {
+    compact_sections = JSON.parse(localStorage.getItem('sections'))
     if (!document.getElementById('settings_menu').classList.contains('hidden')) {
         toggle_settings()
     }
@@ -94,7 +108,6 @@ function toggle_full() {
         }
         full = true
         }
-
 }
 
 
@@ -105,11 +118,9 @@ function sendCommand(command) {
     tv_ip = localStorage.getItem('IP')
     const tv_url = `http://${tv_ip}/sony/IRCC`
     const preshared_key = localStorage.getItem('key')
-    code = code_list[command]
+    const code = code_list[command]
     req.open('POST', tv_url, true);
     req.setRequestHeader('Content-Type', 'text/xml; charset=UTF-8');
-    // Note: The SOAPAction header value must be enclosed in " otherwise get
-    // an Invalid Action error from TV!
     req.setRequestHeader('SOAPAction', '"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"');
     req.setRequestHeader('X-Auth-PSK', preshared_key);
     const data =
@@ -121,11 +132,9 @@ function sendCommand(command) {
           </u:X_SendIRCC>
         </s:Body>
       </s:Envelope>`;
-
-
-    req.timeout = 3000; // in milliseconds
+    req.timeout = 3000; 
     req.send(data);
-    display_status(command)
+    display_status(`Sent: ${command}`)
     console.log(`Sent ${command} command to TV at ${tv_ip} using preshared key ${preshared_key}`);
 
 
