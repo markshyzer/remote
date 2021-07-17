@@ -54,6 +54,7 @@ p {
 
 .button {
     padding: 8px 0;
+    background-color: #444444;
     border: 1px solid #000000;
     border-radius: 3px;
     width: 80px;
@@ -66,7 +67,8 @@ p {
 
 .button:hover {
     cursor: pointer;
-    background-color: #111111;
+    /* background-color: #111111; */
+    opacity: .5;
 }
 
 .small {
@@ -104,11 +106,21 @@ p {
     text-align: center;
 }
 
-#status {
+.status {
     text-align: center;  
     height: 40px;
     color: #DDDDDD;
-    overflow: visible;
+    opacity: 1;
+    /* overflow: visible; */
+    /* transition: opacity 2s; */
+}
+
+.hide {
+    text-align: center;  
+    height: 40px;
+    color: #DDDDDD;
+    opacity: 0;
+    transition: opacity 3s;
 }
 
 #menu{
@@ -117,27 +129,19 @@ p {
     background-color: inherit;
 }
 
-#PowerOff {
-    background-color: green;
-}
-
-#Netflix {
-    background-color: rgb(200, 0, 0);
-}
-
-#Yellow {
+.yellow {
     background-color: yellow;
 }
 
-#Red {
+.red {
     background-color: rgb(200, 0, 0);
 }
 
-#Blue {
+.blue {
     background-color: steelblue;
 }
 
-#Green {
+.green {
     background-color: green;
 }
 

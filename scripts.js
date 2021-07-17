@@ -8,22 +8,17 @@ let full = true
 let default_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
 init()
-localStorage.setItem('sections', JSON.stringify(default_sections))
-
-console.log(localStorage.getItem('sections'))
 
 function init() {
     if (!localStorage.getItem('sections')) {
         display_status('&#8592 Enter TV info', 30)
         localStorage.setItem('sections', JSON.stringify(default_sections))
-        localStorage.setItem('IP','135.23.185.3');
+        localStorage.setItem('IP','135.23.185.7');
         localStorage.setItem('key', '')
     } else {
         console.log('I see you have been here before')
     }
 }
-
-// TODO: Make sure values are being taken from local storage
 
 ip_input.addEventListener('change', function(e){
     localStorage.setItem('IP', e.target.value)
@@ -38,9 +33,7 @@ key_input.addEventListener('change', function(e){
 })
 
 remote.addEventListener('click', function(e) {
-    console.log("Clickety!", e.target.id)
     command = e.target.id
-    console.log('command is ', command)
     if (command in code_list) {
         sendCommand(command)
     } else if (command == 'full-compact') {
@@ -48,21 +41,16 @@ remote.addEventListener('click', function(e) {
     } else if (command == 'settings') {
         toggle_settings()
     } else if (e.target.type == 'checkbox') {
-        console.log('checkity', e.target.id.slice(0, -6))
         default_sections[e.target.id.slice(0, -6)] = !default_sections[e.target.id.slice(0, -6)]
         localStorage.setItem('sections', JSON.stringify(default_sections))
-        console.log(default_sections)
-        console.log(localStorage.getItem('sections'))
-        
-
-
     }
 
 })
 
-function display_status(message, seconds=3) {
+function display_status(message, seconds=1) {
     status.innerHTML = message
-    setTimeout(() => {status.innerHTML = ''; }, seconds*1000)
+    status.classList.remove('hide')
+    setTimeout(() => {status.classList.add('hide')}, seconds*1000)
 }
 
 function toggle_settings() {
@@ -70,6 +58,7 @@ function toggle_settings() {
         toggle_full()
     }
     settings_menu = document.getElementById('settings_menu')
+    display_status('')
     if (settings_menu.classList.contains('hidden')) {
         settings_menu.classList.remove('hidden')
         labels.forEach(l => l.classList.remove('hidden'));
@@ -110,9 +99,6 @@ function toggle_full() {
         }
 }
 
-
-console.log(localStorage.getItem('IP'))
-
 function sendCommand(command) {
     const req = new XMLHttpRequest()
     tv_ip = localStorage.getItem('IP')
@@ -134,11 +120,7 @@ function sendCommand(command) {
       </s:Envelope>`;
     req.timeout = 3000; 
     req.send(data);
-    display_status(`Sent: ${command}`)
-    console.log(`Sent ${command} command to TV at ${tv_ip} using preshared key ${preshared_key}`);
-
-
-}
+    display_status(`Sent:<br> ${command}`)}
 
 code_list = {
     "PowerOff" : "AAAAAQAAAAEAAAAvAw==",
