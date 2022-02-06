@@ -1,3 +1,6 @@
+
+
+
 let remote = document.getElementById('remote')
 let status = document.getElementById('status')
 let sections = document.getElementsByClassName('section')
@@ -7,6 +10,8 @@ let key_input = document.getElementById('key-input')
 let full = true
 let default_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
 
+
+console.log('hi')
 init()
 
 function init() {
