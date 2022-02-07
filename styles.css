@@ -153,3 +153,7 @@ p {
 .hidden {
     display: none;
 }
+
+.no-hover:hover {
+    pointer-events: none;
+}

@@ -1,5 +1,78 @@
 // var XMLHttpRequest = require('xhr2'); // just for running XMLHttpRequest in node (as opposed to browser)
-import fetch from 'node-fetch'; // just for node
+// import fetch from 'node-fetch'; // just for node
+
+// let keystroke = document.getElementById('keystroke')
+let clear = document.getElementById('clear')
+let current_value = document.getElementById('current-value')
+
+
+clear.addEventListener('click', handleClear)
+keystroke.addEventListener('input', keypress)
+
+function handleClear(){
+    console.log('clear function activated')
+    clearTVInput()
+    clearRemoteInput()
+}
+
+function clearRemoteInput(){
+    n.string = ''
+    keystroke.value = ''
+}
+
+async function clearTVInput(){
+    // console.log('clearing TV input', n.string)
+    const t = n.string.length
+    await final_method(n.get_moves('del'))
+    n.position = n.find('del')
+    // console.log(n.string, n.string.length)
+    for (let i = 1; i < t; i++){
+        // console.log('final_method loop activated')
+        await fetchCommand('Confirm', delay=500)
+    }
+
+    // console.log('position of delete', n.position)
+    // await final_method(n.get_moves('a'))
+}
+
+async function keypress(e){
+    if (e.data){
+        keystroke.removeEventListener('input', keypress)
+        console.log('convert keystroke called when', e.data, 'pressed, value is', e.target.value)
+        
+        convert_keystrokes()
+    }
+
+    
+}
+
+async function convert_keystrokes(){
+    console.log('string in memory', n.string)
+    console.log('input string', keystroke.value)
+    current_character = keystroke.value[n.string.length]
+    console.log('current character', current_character)
+
+    await final_method(n.get_moves(current_character))
+    n.position = n.find(current_character)
+    n.string = n.string + current_character
+    current_value.textContent=n.key_value(n.position)
+
+    // console.log(keystroke.value)
+    // console.log('target value now is', e.target.value)
+    // console.log(e.target.value.length, n.string.length)
+    if (keystroke.value.length > n.string.length){
+        console.log('comparison true')
+        convert_keystrokes()
+    } else {
+        keystroke.addEventListener('input', keypress)
+    }
+
+
+    /// compare keystroke.value Keyboard.string (which needs to be created) and find the next different chatacter
+    /// call convert_keystroke on that character
+    /// turn the event listener back on before exiting the function
+    }
+    
 
 const code_list = {
     "PowerOff" : "AAAAAQAAAAEAAAAvAw==",
@@ -119,10 +192,11 @@ class Keyboard {
         this.layout = layout
         this.start_key = start_key
         this.position = this.find(start_key)
+        this.string = ''
     }
 
     find(x) {
-        console.log('searching for ', x)
+        // console.log('searching for ', x)
         let position = []
         this.layout.forEach(function (line, index){
             // console.log(line)
@@ -133,7 +207,7 @@ class Keyboard {
             if (found >= 0){
                 // this.position = [index, found]
                 position = [index, found]
-                console.log(x, 'is at', index, found)
+                // console.log(x, 'is at', index, found)
                 return position
             } else {
                 return 'character not found in keyboard'
@@ -146,7 +220,7 @@ class Keyboard {
         return [start[0]-end[0], start[1]-end[1]]
     }
 
-    get_moves(delta){
+    path(delta){
         let moves = []
         if (delta[0] < 0){
             for (let i = 0; i < Math.abs(delta[0]); i++){
@@ -166,7 +240,27 @@ class Keyboard {
             moves.push(LEFT)
             }
         }
+        console.log(moves)
         return moves
+    }
+
+    key_value(position){
+        return this.layout[position[0]][position[1]]
+    }
+
+    get_moves(character){
+        const p = this.position
+        const f = this.find(character)
+        const d = this.delta(p, f)
+        const m = this.path(d)
+        console.log('the character is ', character, 'the moves are', m)
+        if (character === ' ' || character === 'del') {
+            console.log('REVERSED THE MOVES')
+            m.reverse()
+        }
+        m.push('Confirm')
+        console.log('get_moves returning', m)
+        return m
     }
 
     word(string){
@@ -176,6 +270,8 @@ class Keyboard {
     }
 
 }
+
+
 
 let n = new Keyboard( [
     [' ', ' ', ' ', 'del', 'del', 'del'],
@@ -187,136 +283,35 @@ let n = new Keyboard( [
     ['5', '6', '7', '8', '9', '0'],
 ], 'a')
 
-    
-// function delay(t, v) {  // https://stackoverflow.com/questions/39538473/using-settimeout-on-promise-chain
-//     return new Promise(function(resolve) { 
-//         setTimeout(resolve.bind(null, v), t)
-//     });
-//  }
+current_value.textContent=n.key_value(n.position)
 
 
-let dest = 'v'
-console.log('dest is', dest)
-
-// console.log(n.position)
-// console.log(n.find('+'))
-let delta = n.delta(n.position, n.find(dest))
-console.log('To get to', dest, 'from', n.layout[1][0], ':', delta)
+// console.log(n.get_moves('b'))
+// let dest = 'v'
+// console.log('dest is', dest)
+// let delta = n.delta(n.position, n.find(dest))
+// console.log('To get to', dest, 'from', n.layout[1][0], ':', delta)
 // moves = n.get_moves(delta)
 const moves = ['Down','Down','Down','Down','Down','Right','Right','Right','Right','Right','Up','Up','Up','Up','Up','Left','Left','Left','Left','Left']
 const knight_moves = ['Down','Down','Right','Right']
-console.log(moves)
+// console.log(moves)
 
-
-function delay(t, v) {
-    return new Promise(function(resolve) { 
-        setTimeout(resolve.bind(null, v), t)
-    });
- }
-
-
-function execute_moves(moves){
-    return new Promise((resolve, reject) => {
-        moves.forEach(function(move, i){
-            // console.log(move)
-            setTimeout(sendCommand, 200 * i, move);
-            if (i + 1 === moves.length) {
-                setTimeout(sendCommand, 200 * (i+1), 'Confirm'); 
-
-            }            
-        });
-        setTimeout(resolve, 200 * moves.length) 
- 
-    })
-}
-
-function promise_moves(moves){
-    return new Promise((resolve, reject) => {
-        moves.forEach(function(move, i){
-            // console.log(move)
-            sendCommand(move)
-            if (i + 1 === moves.length) {
-                sendCommand('Enter')
-                resolve('Done')
-            }            
-        });
-    })
-}
-
-// execute_moves(moves).then(execute_moves(knight_moves))
-// promise_moves(moves)
-
-const starterPromise = Promise.resolve(null);
+const starterPromise = Promise.resolve(null); // https://jrsinclair.com/articles/2019/how-to-run-async-js-in-parallel-or-sequential/
 // const log = result => console.log(result);
-
 let final_method = async (moves) => {
 await moves.reduce(
     (p, move, i) => p.then(() => fetchCommand(move)),
     starterPromise
 );
 }
-await final_method(moves)
-final_method(moves)
-
-let async_promise_moves = async (moves) => {
-Promise.allSettled(
-    moves.map(async (move) => {
-        console.log('sending', move);
-        fetchCommand(move).then(xx => console.log(move, xx))
-                
-    })
-  )
-}
-
-// async_promise_moves(moves).then(fetchCommand('Enter')).then(xx => console.log('Enter --', xx))
-// console.log('X')
-// fetchCommand('Input').then(xyx => console.log(xyx))
-
-function sleeper(ms) {
-    return function(x) {
-      return new Promise(resolve => setTimeout(() => resolve(x), ms));
-    };
-  }
-
-// await arr.reduce(async (memo, i) => {  // https://advancedweb.hu/how-to-use-async-functions-with-array-foreach-in-javascript/
-// 	await memo;
-// 	await sleep(10 - i);
-// 	console.log(i);
-// }, undefined);
-
-// clearTimeout(t)
-// clearTimeout(v)
-
-// moves.forEach(function(move, i){
-//     sendCommand(move).then(delay(1000))
-// })
-
-
-
-
- 
-// execute.then(sendCommand('Enter')); 
-
-// moves.forEach(function(move, i){
-//     console.log(move)
-//     setTimeout(function () {
-//         sendCommand(move)
-//      }, 200 * i);
-// sendCommand('Enter')
-    
-    
-// })
-
-// console.log(n.moves(delta))
-
-// console.log(n.moves(n.delta(n.find('5'), n.find('del'))))
-
+// for (let i = 0; i < 2; i++) {
+//     await final_method(moves)
+//     console.log('press enter')
+//   } 
 
 function wait(ms, value) {
     return new Promise(resolve => setTimeout(resolve, ms, value));
 }
-
-
 
 //// redundant below
 
@@ -350,8 +345,8 @@ function sendCommand(command) {
     // display_status(`Sent:<br> ${command}`)}
 }
 
-async function fetchCommand(command) {
-    await wait(300)
+async function fetchCommand(command, delay=350) {
+    await wait(delay)
     new Promise ((resolve) => {
         const tv_ip = '192.168.100.100' //localStorage.getItem('IP')
         const tv_url = `http://${tv_ip}/sony/IRCC`
@@ -368,22 +363,16 @@ async function fetchCommand(command) {
           </s:Body>
         </s:Envelope>`;
         fetch(tv_url, {
-            method: 'POST', // Default is 'get'
-            // body: JSON.stringify(data),
+            method: 'POST', 
             body: data,
-            // mode: 'cors',
+            mode: 'cors',
             headers: {
+                'Accept': '*/*',
                 'Content-Type': 'text/xml; charset=UTF-8',
                 'SOAPAction': '"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"',
                 'X-Auth-PSK': preshared_key,
-                'Connection': 'keep-alive',
             }
           })
-          
-        // .then(value => wait(3000, value))
-        //   .then(x => new Promise(resolve => setTimeout(() => resolve, 10000, x)))
-        //   .then(x => sleeper(1000), x)
-        //   .then(response => setTimeout(response, 1000))
         .then(response => resolve(response.status))
     })
 }

@@ -7,11 +7,10 @@ let sections = document.getElementsByClassName('section')
 let labels = document.querySelectorAll('.label')
 let ip_input = document.getElementById('ip-input')
 let key_input = document.getElementById('key-input')
+let keystroke = document.getElementById('keystroke')
 let full = true
-let default_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-options': false, 'info': false, 'numpad': false, 'volume-channel': true}
+let default_sections = {'input-power': true, 'media-controls': false, 'color-buttons': false, 'nav-wheel': true, 'home-options': false, 'info': false, 'numpad': false, 'volume-channel': true, 'keyboard-input': true}
 
-
-console.log('hi')
 init()
 
 function init() {
@@ -23,6 +22,7 @@ function init() {
     } else {
         console.log('I see you have been here before')
     }
+    keystroke.value = '' // should probably be clear remote
 }
 
 ip_input.addEventListener('change', function(e){

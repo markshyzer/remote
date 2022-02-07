@@ -15,8 +15,9 @@
             <div class='empty emoji' id='settings'> &#9881;</div>
             <div class='empty status' id='status'></div>
             <div class='empty emoji' id='full-compact'> &#8286;&#8285;&#8286;</div>
-            
+
         </div>
+
         <div class='page hidden' id='settings_menu'>
             <p>Setup</p>
             <p>Connect to your Sony TV using the device IP and pre-shared key. To find your TV's IP address press [HOME] 
@@ -35,6 +36,7 @@
             <div class='empty' id=''> </div>
             <div class='button green' id='PowerOff'>Off</div>
         </div>
+
         <div class='section' id='media-controls'>
             <div class='label hidden'> <input type="checkbox" id="media-controls-check"> Media Controls</div>
             <div class='button small' id='Prev'>I&#9668;&#9668;</div>
@@ -104,8 +106,17 @@
             <div class='button' id='Mute'>Mute</div>
             <div class='button'id='Jump'>Jump</div>
         </div>
+        <div class='section' id='keyboard-input'>
+            <div class='label hidden'> <input type="checkbox" id="keyboard-input-check" checked>Keyboard Input</div>
+            <div style='display: flex; margin-top: 15px; margin-bottom: 40px;'>
+                <div class='button no-hover' id='current-value' style='font-size:large; background-color:inherit; box-shadow:none; margin-left: 27px'></div>
+                <input class='input-text' id='keystroke' type="text" style='margin:0; margin-top: 5px; font-family:inherit'>
+                <div class='button' id='clear' style='margin-right: 27px;'>&#9746;</div>
+            </div>
+        </div>
 
     </div>
     <script src="scripts.js"></script>
+    <script src="keyboard.js"></script>
 </body>
 </html>
