@@ -1,6 +1,5 @@
 # Remote
-<img src="https://github.com/markshyzer/remote/blob/main/screenshot.png" align="center" width="300">
-![The virtual remote looks just like the real thing](https://github.com/markshyzer/remote/blob/main/screenshot.png | width=600)
+<p align="center"><img src="https://github.com/markshyzer/remote/blob/main/screenshot.png" width="300"></p>
 
 This virtual remote uses Sony's IRCC-IP protocol to send commands to any post-2016 Sony Bravia TV from any device on the same wifi network.
 
