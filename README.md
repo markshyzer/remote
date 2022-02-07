@@ -20,10 +20,10 @@ Click &#9881; to close the settings menu. Click &#8286;&#8285;&#8286; to toggle 
 The text box at the bottom of the screen takes text input from your device and can 'type' it into an on-screen keyboard. To use it, navigate to the on-screen keyboard, making sure that the cursor on-screen is placed on the key indicated in the box to the left of the input. Then type as you normally would. The remote will handle the rest.
 
 ### Limitations & Known Issues
-The IRCC-IP protocol can only send a limited number of commands and receives no feedback. There is no way to send text information directly, or to confirm what has been received, so the keyboard input works by navigating its own map of the on-screen keyboard using the arrow commands the same way a human user would, but faster. 
-Currently only the Netflix search keyboard layout has been modeled.
-The remote receives a confirmation that a command was received, but has no way of knowing that it has been executed by the TV app. As a partial solution, the remote pauses briefly between successive commands, but without making that wait interminably long it is still possible that a slow-running process on the TV may cause commands to be skipped. If this happens, use the arrow keys to move the on-screen cursor to the key indicated in the box to the left of the input box. Or simply clear the on-screen text manually and Refresh the remote in your browser.
-Navigating directly from the 'space' key to the 'delete' key will throw the cursor out of sync.
+The IRCC-IP protocol can only send a limited number of commands and receives no feedback. There is no way to send text information directly, or to confirm what has been received, so the keyboard input works by navigating its own map of the on-screen keyboard using the arrow commands the same way a human user would, but faster.  
+Currently only the Netflix search keyboard layout has been modeled.  
+The remote receives a confirmation that a command was received, but has no way of knowing that it has been executed by the TV app. As a partial solution, the remote pauses briefly between successive commands, but without making that wait interminably long it is still possible that a slow-running process on the TV may cause commands to be skipped. If this happens, use the arrow keys to move the on-screen cursor to the key indicated in the box to the left of the input box. Or simply clear the on-screen text manually and Refresh the remote in your browser.  
+Navigating directly from the 'space' key to the 'delete' key will throw the cursor out of sync.  
 
 ### To-Do
 - Error handling
